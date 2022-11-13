@@ -35,14 +35,16 @@ const main = async () => {
   console.log("GIF count", account.totalGifs.toString());
 
   tx = await program.methods
-      .addGif()
+      .addGif("http://giflink_example.com")
       .accounts({
-        baseAccount: baseAccount.publicKey
+        baseAccount: baseAccount.publicKey,
+        user: provider.wallet.publicKey
       })
       .rpc()
   
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("GIF count after increment is ", account.totalGifs.toString());
+  console.log("GIF_list for this user is ", account.gifList);
 };
 
 const runMain = async () => {
